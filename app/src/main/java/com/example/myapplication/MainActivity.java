@@ -5,8 +5,10 @@ import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -24,12 +26,16 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.myapplication.db.AddProducts;
+import com.example.myapplication.db.AppData;
+import com.example.myapplication.db.UserDAO;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private ArrayList<products> productsArrayList;
@@ -79,23 +85,37 @@ public class MainActivity extends AppCompatActivity {
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu, menu);
-       // MenuItem menuItem = menu.findItem(R.id.cart_action);
-     //   menuItem.setIcon(Converter.convertLayoutToImage(MainActivity.this,cart_count,R.drawable.cart));
-        MenuItem menuItem2 = menu.findItem(R.id.notification_action);
-        menuItem2.setIcon(Converter.convertLayoutToImage(MainActivity.this,2, R.drawable.cart));
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        switch (item.getItemId()) {
+            case R.id.action_add:
+                //fetchAddcart();
+                startActivity(new Intent(getApplicationContext(),AddProduct.class));
+                return true;
+            case R.id.action_settings:
+               // startSettings();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
-        return super.onOptionsItemSelected(item);
+    private void fetchAddcart() {
+        AppData db= Room.databaseBuilder(getApplicationContext(),AppData.class,"room_db").allowMainThreadQueries().build();
+        UserDAO userDao=db.userDao();
+
+        List<AddProducts> addProducts=userDao.getAllUsers();
+        String str="";
+        for(AddProducts addProduct :addProducts)
+
+
+       str= str+"\t"+addProduct.getId()+""+addProduct.getPrice()+""+addProduct.getTitle();
+
+
     }
 
 
@@ -106,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
             loadingPB.setVisibility(View.GONE);
             return;
         }
-        String url = "https://fakestoreapi.com/products/";
+        String url = "https://fakestoreapi.com/products";
         //JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
              //   new Response.Listener<JSONArray>(){
        // JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
@@ -121,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
                                 JSONObject jsonObject = jsonArray.getJSONObject(i);
 
                                 // Log.i("Response", String.valueOf(response));
-                                productsArrayList.add(new products(jsonObject.getString("title"), jsonObject.getString("price"), jsonObject.getString("category"), jsonObject.getString("image")));
+                                productsArrayList.add(new products(jsonObject.getString("title"), jsonObject.getString("price"), jsonObject.getString("category"), jsonObject.getString("image"),jsonObject.getString("description")));
                                 productsAdapter = new ProductsAdapter(productsArrayList, MainActivity.this);
                                 productsRV.setLayoutManager(new LinearLayoutManager(MainActivity.this));
                                 productsRV.setAdapter(productsAdapter);
@@ -130,34 +150,6 @@ public class MainActivity extends AppCompatActivity {
                                 throw new RuntimeException(e);
                             }
                         }
-
-
-                /*    @Override
-                   public void onResponse(JSONArray response) {
-
-
-                Log.i(String.valueOf(response),"jdnasdsdn");
-                for (int i =1; i < response.length(); i++) {
-                    try {
-                        JSONObject jsonObject = response.getJSONObject(i);
-                        productsArrayList.add(new products( jsonObject.getString("title"),
-                                jsonObject.getString("price"),
-                                jsonObject.getString("category"),
-                                jsonObject.getString("image")));
-                      /*  products products1 = new products();
-                        products1.setTitle(jsonObject.getString("title"));
-                        products1.setCategory(jsonObject.getString("category"));
-                        products1.setPrice(jsonObject.getString("price"));
-                        products1.setImage(jsonObject.getString("image"));*/
-                       /* productsAdapter = new ProductsAdapter(productsArrayList, MainActivity.this);
-                        productsRV.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-                        productsAdapter.notifyDataSetChanged();
-                    } catch (JSONException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-
-               // progressDialog.dismiss();*/
 
                         }
                         },new Response.ErrorListener() {

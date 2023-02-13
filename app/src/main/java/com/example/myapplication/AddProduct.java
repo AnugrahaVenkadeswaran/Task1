@@ -4,53 +4,63 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.myapplication.db.AppData;
 import com.example.myapplication.db.AddProducts;
+import com.example.myapplication.db.UserDAO;
 
 import java.util.List;
 
 public class AddProduct extends AppCompatActivity {
 
     Button newProd;
-    private UserListAdapter userListAdapter;
+    TextView cartTitle,cartPrice;
+    RecyclerView recyclerView;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_product);
 
         newProd=(Button) findViewById(R.id.addNewProduct);
+
+        getroomdata();
+
+
         newProd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                startActivity(new Intent(AddProduct.this, MainActivity.class));
-
             }
         });
-        initRecyclerView();
 
-        loadUserList();
     }
 
-    private void initRecyclerView() {
-        RecyclerView recyclerView = findViewById(R.id.rvProducts);
+    private void getroomdata() {
+        AppData db= Room.databaseBuilder(getApplicationContext(),AppData.class,"room_db").allowMainThreadQueries().build();
+        UserDAO userDao=db.userDao();
+
+        recyclerView=(RecyclerView) findViewById(R.id.rvProducts);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
-        recyclerView.addItemDecoration(dividerItemDecoration);
-        UserListAdapter userListAdapter = new UserListAdapter(this);
+        List<AddProducts> addProducts=userDao.getAllUsers();
+        UserListAdapter userListAdapter=new UserListAdapter(addProducts);
         recyclerView.setAdapter(userListAdapter);
+
     }
 
-    private void loadUserList() {
-        AppData db = AppData.getDBInstance(this.getApplicationContext());
-        List<AddProducts> addProductsList1 =db.userDAO().getAllUsers();
-        userListAdapter.setUserList(addProductsList1);
+
+    public void onBackPressed(){
+        Intent intent=new Intent(AddProduct.this,MainActivity.class);
+        startActivity(intent);
     }
 }

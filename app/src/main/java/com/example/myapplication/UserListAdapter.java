@@ -17,16 +17,22 @@ import java.util.List;
 public class UserListAdapter extends  RecyclerView.Adapter<UserListAdapter.MyViewHolder>{
     private Context context;
     private List<AddProducts> addProductsList1;
+    TextView cpTitle,cpPrice;
+    List<AddProducts> addProducts;
 
 
     public UserListAdapter(Context context) {
         this.context = context;
     }
 
-    public void setUserList(List<AddProducts> addProductsList1) {
-        this.addProductsList1 = addProductsList1;
-        notifyDataSetChanged();
+    public UserListAdapter(List<AddProducts> addProducts) {
+        this.addProducts=addProducts;
     }
+
+    /*public void setUserList(List<AddProducts> addProducts) {
+        this.addProducts = addProducts;
+        notifyDataSetChanged();
+    }*/
 
     @NonNull
     @Override
@@ -39,15 +45,15 @@ public class UserListAdapter extends  RecyclerView.Adapter<UserListAdapter.MyVie
     @Override
     public void onBindViewHolder(@NonNull UserListAdapter.MyViewHolder holder, int position) {
 
-        holder.pPrice.setText(this.addProductsList1.get(position).getPrice());
-        holder.pTitle.setText(this.addProductsList1.get(position).getTitle());
+        holder.pPrice.setText(this.addProducts.get(position).getPrice());
+        holder.pTitle.setText(this.addProducts.get(position).getTitle());
       //  holder.pImage.setImageResource(this.productsList1.get(position).getImage());
 
     }
 
     @Override
     public int getItemCount() {
-        return  this.addProductsList1.size();
+        return  this.addProducts.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{

@@ -12,7 +12,109 @@
         app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/rvProducts"
         />
+<!--<androidx.cardview.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:elevation="8dp"
+    app:cardCornerRadius="8dp"
+    tools:ignore="MissingConstraints">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:weightSum="3">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight=".7">
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:id="@+id/prodImage" /></LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="3dp"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+            android:paddingLeft="15dp">
+
+            <TextView
+                android:id="@+id/prodTitle"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:text="Title"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:textSize="12sp"
+                android:text="price"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:id="@+id/prodPrice"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="103dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="3dp"
+            android:layout_weight=".6"
+            android:orientation="vertical"
+            android:paddingLeft="15dp">
+
+            <TextView
+                android:id="@+id/prodqty"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:text="QTY"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="15dp">
+
+                <TextView
+                    android:id="@+id/decre"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:gravity="center"
+                    android:text="-"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/num"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/incre"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:gravity="center"
+                    android:text="+"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>-->
     <Button android:id="@+id/addNewProduct"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,5 +122,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:text="Add New Product"
-        android:textAllCaps="false"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:textAllCaps="false"/></androidx.constraintlayout.widget.ConstraintLayout>

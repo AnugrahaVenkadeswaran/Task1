@@ -16,6 +16,15 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+  /*  configurations {
+        all {
+            resolutionStrategy {
+
+                force 'com.squareup.okhttp3:okhttp:3.12.0'
+                force 'com.squareup.okhttp3:logging-interceptor:3.12.0'
+            }
+        }
+    }*/
 
     buildTypes {
         release {
@@ -28,18 +37,25 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 }
+configurations {
+    cleanedAnnotations
+    implementation.exclude group: 'org.jetbrains' , module:'annotations'
+}
 
 dependencies {
 
-    implementation 'androidx.appcompat:appcompat:1.6.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.8.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'com.google.firebase:firebase-messaging:23.0.3'
-    implementation 'com.google.firebase:firebase-auth:21.0.3'
+    implementation 'com.google.firebase:firebase-messaging:23.1.1'
+    implementation 'com.google.firebase:firebase-auth:21.1.0'
    implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.room:room-runtime:2.5.0'
-    implementation 'androidx.room:room-compiler:2.5.0'
+    annotationProcessor 'androidx.room:room-compiler:2.5.0'
+    //implementation "android.arch.persistence.room:runtime:1.0.0"
+    //annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
+    implementation 'com.google.firebase:firebase-crashlytics-buildtools:2.9.2'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'

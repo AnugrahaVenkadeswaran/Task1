@@ -6,6 +6,16 @@ import androidx.room.PrimaryKey;
 
 @Entity
 public class AddProducts {
+
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @PrimaryKey(autoGenerate = true)
     public int id;
 
@@ -14,6 +24,22 @@ public class AddProducts {
 
     @ColumnInfo(name = "price")
     public String price;
+
+
+    public AddProducts(int id, String title, String price) {
+        this.id = id;
+        this.title = title;
+        this.price = price;
+       // this.image = image;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 
     @ColumnInfo(name="image")
     public  String image;

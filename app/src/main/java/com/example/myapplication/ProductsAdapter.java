@@ -1,6 +1,8 @@
 package com.example.myapplication;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +19,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHolder>{
+public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHolder> {
 
 
     private final ArrayList<products> productsArrayList;
@@ -38,16 +40,27 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
 
         products products1 = productsArrayList.get(position);
 
-        holder.titleT.setText(products1.getTitle());
+        //holder.titleT.setText(products1.getTitle());
         holder.priceT.setText(products1.getPrice());
         holder.categoryT.setText(products1.getCategory());
+        //holder.descripT.setText(products1.getCategory());
 
         Picasso.get().load(products1.getImage()).into(holder.imageT);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent =new Intent(context,DetailedProduct.class);
+                intent.putExtra("Products",productsArrayList.get(position));
+                context.startActivity(intent);
+
+            }
+        });
     }
 
     @Override
@@ -59,7 +72,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView titleT, priceT, categoryT;
+        private TextView titleT, priceT, categoryT,descripT;
         private ImageView imageT;
 
         private Button addCart;
@@ -67,13 +80,14 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            titleT = itemView.findViewById(R.id.title);
+           // titleT = itemView.findViewById(R.id.title);
             priceT = itemView.findViewById(R.id.pPrice);
             categoryT = itemView.findViewById(R.id.pCategory);
             imageT = itemView.findViewById(R.id.pImage);
-            addCart=itemView.findViewById(R.id.addcart);
+          //  addCart = itemView.findViewById(R.id.addcart);
+        }
 
-            addCart.setOnClickListener(new View.OnClickListener() {
+      /*      addCart.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     addProducts(titleT.getText().toString(),priceT.getText().toString(),imageT.getContext().toString());
@@ -82,9 +96,9 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
         }
 
 
-    }
+    }*/
 
-    private void addProducts(String title, String price, String image) {
+   /* private void addProducts(String title, String price, String image) {
         AppData db  = AppData.getDBInstance(this.context.getApplicationContext());
 
         AddProducts addProducts = new AddProducts();
@@ -99,6 +113,7 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ViewHo
 
     private void finish(int i) {
     }
+*/
 
-
+    }
 }

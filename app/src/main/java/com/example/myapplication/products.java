@@ -1,16 +1,21 @@
 package com.example.myapplication;
 
-public class products {
+import java.io.Serializable;
+
+public class products implements Serializable {
     private String title;
     private String price;
     private String category;
     private String image;
 
-    public products(String title,String price,String category,String image) {
+    private String description;
+
+    public products(String title,String price,String category,String image,String description) {
         this.title = title;
         this.price = price;
         this.category = category;
         this.image = image;
+        this.description=description;
     }
 
     public products() {
@@ -51,6 +56,14 @@ public class products {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
   /*  private String id;
     private String title;
